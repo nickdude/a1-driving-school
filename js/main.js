@@ -16,12 +16,20 @@
     new WOW().init();
 
 
-    // Sticky Navbar: toggle shadow only. Keep navbar at top (CSS handles positioning).
+    // Sticky Navbar: toggle shadow and a 'scrolled' state for visual shrinking.
     $(window).on('scroll', function () {
-        if ($(this).scrollTop() > 300) {
+        var scrolled = $(this).scrollTop();
+        if (scrolled > 300) {
             $('.sticky-top').addClass('shadow-sm');
         } else {
             $('.sticky-top').removeClass('shadow-sm');
+        }
+
+        // Shrink navbar after small scroll threshold
+        if (scrolled > 80) {
+            $('.navbar').addClass('navbar-scrolled');
+        } else {
+            $('.navbar').removeClass('navbar-scrolled');
         }
     });
 

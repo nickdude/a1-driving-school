@@ -85,6 +85,34 @@
     transition: .25s;
 }
 
+/* Visual enhancement for navbar */
+.navbar {
+    background: linear-gradient(180deg, #ffffff, #fbfbfb);
+    transition: background .3s ease, padding .25s ease, box-shadow .25s ease;
+}
+
+/* Shrink navbar when scrolled to provide more viewport space */
+.navbar.navbar-scrolled {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.navbar .navbar-brand h2 {
+    color: var(--dark);
+    font-weight: 700;
+}
+
+.navbar .navbar-brand i.fa-car {
+    color: var(--primary);
+}
+
+/* Mobile CTA styling inside collapsed menu */
+.mobile-cta {
+    font-weight: 700;
+    padding: 12px 18px;
+    border-radius: 6px;
+}
+
 .navbar .navbar-brand,
 .navbar a.btn {
     height: 80px
@@ -125,21 +153,69 @@
 }
 
 @media (min-width: 992px) {
+    /* Desktop dropdown: floating panel with shadow and smooth animation */
     .navbar .nav-item .dropdown-menu {
         display: block;
         border: none;
         margin-top: 0;
-        top: 150%;
+        top: 120%;
         opacity: 0;
         visibility: hidden;
-        transition: .5s;
+        transform: translateY(-8px);
+        transition: transform .22s ease, opacity .22s ease, visibility .22s;
+        min-width: 200px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 12px 30px rgba(11, 24, 40, 0.08);
+        padding: 6px 0;
+        z-index: 1055;
     }
 
     .navbar .nav-item:hover .dropdown-menu {
         top: 100%;
         visibility: visible;
-        transition: .5s;
+        transform: translateY(0);
         opacity: 1;
+    }
+
+    /* Dropdown items spacing and hover */
+    .navbar .dropdown-menu .dropdown-item {
+        padding: 10px 18px;
+        color: var(--dark);
+        font-weight: 600;
+        transition: background .15s ease, color .15s ease;
+    }
+
+    .navbar .dropdown-menu .dropdown-item:hover {
+        background: rgba(243, 189, 0, 0.08);
+        color: var(--primary);
+    }
+
+    /* Rotate caret when menu open */
+    .navbar .nav-item.show > .nav-link.dropdown-toggle::after,
+    .navbar .nav-item:hover > .nav-link.dropdown-toggle::after {
+        transform: rotate(180deg);
+    }
+}
+
+/* Mobile: make dropdown behave as part of the collapsed panel (static, full-width) */
+@media (max-width: 991.98px) {
+    .navbar .dropdown-menu {
+        position: static !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+    }
+
+    .navbar .dropdown-menu .dropdown-item {
+        padding: 12px 16px;
+        color: var(--dark);
+        background: transparent;
+    }
+
+    .navbar .nav-item .dropdown-toggle::after {
+        margin-left: 6px;
     }
 }
 
@@ -191,6 +267,65 @@
     /* Avoid fixed background on mobile where it's costly and can cause scroll issues */
     .courses {
         background-attachment: scroll;
+    }
+}
+
+/* Mobile navbar improvements */
+@media (max-width: 991.98px) {
+
+    /* Reduce brand height and allow wrapping so logo + tagline fit */
+    .navbar .navbar-brand,
+    .navbar a.btn {
+        height: auto;
+        padding: 10px 16px;
+    }
+
+    .navbar .navbar-brand h2 {
+        font-size: 1.1rem;
+        line-height: 1.1;
+        margin: 0;
+    }
+
+    .navbar .navbar-brand small {
+        display: block;
+        font-size: .7rem;
+        color: var(--secondary);
+        margin-top: 2px;
+    }
+
+    /* Make the collapsed menu a full-width panel with a light shadow for clarity */
+    .navbar-collapse {
+        position: relative;
+    }
+
+    /* `.navbar-collapse.collapse` intentionally left out to avoid empty ruleset; default collapse behavior applies */
+
+    .navbar-collapse.show {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        z-index: 1050;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        padding-bottom: 12px;
+    }
+
+    .navbar .navbar-nav {
+        padding: 8px 16px;
+    }
+
+    .navbar .navbar-nav .nav-link {
+        padding: 12px 0;
+        margin-right: 0;
+        text-transform: none;
+        /* easier to read on small screens */
+        font-weight: 600;
+    }
+
+    /* Ensure the large CTA button shows under the menu and doesn't overlap */
+    .navbar .btn.d-none.d-lg-block {
+        display: none !important;
     }
 }
 
