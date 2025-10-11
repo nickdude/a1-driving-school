@@ -78,9 +78,11 @@
 
 
 /*** Navbar ***/
+/* Keep the sticky navbar visible at the top by default. The script will only toggle a shadow
+   when the page is scrolled instead of moving the navbar on/off screen. */
 .navbar.sticky-top {
-    top: -100px;
-    transition: .5s;
+    top: 0;
+    transition: .25s;
 }
 
 .navbar .navbar-brand,
@@ -112,7 +114,7 @@
 }
 
 @media (max-width: 991.98px) {
-    .navbar .navbar-nav .nav-link  {
+    .navbar .navbar-nav .nav-link {
         margin-right: 0;
         padding: 10px 0;
     }
@@ -174,12 +176,33 @@
         position: relative;
         min-height: 450px;
     }
-    
+
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+}
+
+/* Mobile performance tweaks */
+@media (max-width: 991.98px) {
+
+    /* Avoid fixed background on mobile where it's costly and can cause scroll issues */
+    .courses {
+        background-attachment: scroll;
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* On very small phones reduce the hero height so CTAs remain visible */
+    #header-carousel .carousel-item {
+        min-height: 300px;
+    }
+
+    .carousel-caption h1.display-2 {
+        font-size: 2rem;
     }
 }
 
@@ -348,4 +371,67 @@
 
 .copyright a:hover {
     color: var(--light);
+}
+
+/* Mobile contact bar and responsive map tweaks */
+@media (max-width: 992px) {
+    .mobile-contact-bar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #0c2b4b;
+        color: #fff;
+        display: flex;
+        gap: 8px;
+        padding: 10px 12px;
+        align-items: center;
+        justify-content: space-around;
+        z-index: 1060;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .mobile-contact-bar a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Prevent the bar from covering page content */
+    body {
+        padding-bottom: 72px;
+    }
+
+    /* Make embedded maps shorter on phones */
+    .contact-iframe {
+        min-height: 240px !important;
+    }
+}
+
+@media (min-width: 993px) {
+    body {
+        padding-bottom: 0;
+    }
+}
+
+/* Override inline min-height values on small screens to avoid very tall blocks */
+@media (max-width: 992px) {
+
+    /* target elements that use inline style="min-height: 400px;" */
+    .position-relative[style*="min-height: 400px"] {
+        min-height: 260px !important;
+    }
+
+    /* target col-lg-6 containers that have min-height: 450px inline */
+    .col-lg-6[style*="min-height: 450px"] {
+        min-height: 260px !important;
+    }
+
+    /* ensure iframe uses reduced height on small screens */
+    iframe.contact-iframe[style*="min-height: 450px"] {
+        min-height: 240px !important;
+    }
 }
